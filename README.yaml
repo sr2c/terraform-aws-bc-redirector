@@ -1,0 +1,48 @@
+name: terraform-aws-bc-redirector
+license: "BSD-2"
+gitlab_repo: https://gitlab.com/sr2c/terraform-aws-bc-redirector
+description: |-
+  Terraform module to deploy a Bypass Censorship Redirector in AWS.
+usage: |-
+  ```hcl
+  provider "aws" {
+    region = "us-east-2"
+  }
+  
+  provider "aws" {
+    alias  = "acm"
+    region = "us-east-1"
+  }
+
+  resource "random_password" "secret_key" {
+    length  = 43
+    special = false
+  }
+  
+  module "redirector" {
+    providers = {
+    aws     = aws,
+    aws.acm = aws.acm
+    }
+    source                    = "./../../../modules/terraform-aws-bc-redirector"
+    namespace                 = "eg"
+    name                      = "redirector"
+    default_redirector_domain = "example.com"
+  
+    entry_points = [
+      "example.com",
+      "example.org"
+    ]
+  
+    public_key   = var.public_key
+    secret_key   = random_password.secret_key.result
+    update_key   = var.update_key
+  }
+  ```
+include:
+- "docs/targets.md"
+- "docs/terraform.md"
+contributors:
+- name: irl
+  gitlab: irlxyz
+  gitlab_id: 5895869

@@ -1,0 +1,1 @@
+@reboot ubuntu (cd /home/ubuntu ; /bin/bash start.sh) &>/dev/null

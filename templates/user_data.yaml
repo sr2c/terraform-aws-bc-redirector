@@ -1,0 +1,39 @@
+#cloud-config
+
+bootcmd:
+  - DEBIAN_FRONTEND=noninteractive apt-get -yq update
+
+apt:
+  conf: |
+    APT {
+      Get {
+        Assume-Yes "true";
+        Fix-Broken "true";
+      };
+    };
+
+packages:
+  - git
+  - python3-venv
+  - unattended-upgrades
+package_upgrade: true
+
+runcmd:
+  - echo unattended-upgrades unattended-upgrades/enable_auto_updates boolean true | debconf-set-selections
+  - DEBIAN_FRONTEND=noninteractive dpkg-reconfigure unattended-upgrades
+  - chown ubuntu:ubuntu /home/ubuntu /home/ubuntu/start.sh /home/ubuntu/config.yaml
+  - sleep 5 && sudo -u ubuntu /bin/bash /home/ubuntu/start.sh
+
+write_files:
+  - content: ${app_config}
+    path: /home/ubuntu/config.yaml
+    owner: root:root
+    permissions: '0600'
+  - content: ${crontab}
+    path: /etc/cron.d/redirector
+    owner: root:root
+    permissions: '0644'
+  - content: ${start_script}
+    path: /home/ubuntu/start.sh
+    owner: root:root
+    permissions: '0644'
