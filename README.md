@@ -77,10 +77,11 @@ resource "random_password" "secret_key" {
 
 module "redirector" {
   providers = {
-  aws     = aws,
-  aws.acm = aws.acm
+    aws     = aws,
+    aws.acm = aws.acm
   }
-  source                    = "./../../../modules/terraform-aws-bc-redirector"
+  source                    = "sr2c/bc-redirector/aws"
+  # TODO: version           = "x.x.x"
   namespace                 = "eg"
   name                      = "redirector"
   default_redirector_domain = "example.com"
