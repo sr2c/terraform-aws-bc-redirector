@@ -46,10 +46,10 @@ data "cloudinit_config" "this" {
         UPDATE_KEY : var.update_key,
         SECRET_KEY : var.secret_key,
         PUBLIC_KEY : var.public_key,
-        UTM_MEDIUM : var.utm_medium,
-        UTM_CAMPAIGN : var.utm_campaign,
-        UTM_SOURCE : var.utm_source
-      })) # This is a JSON string containing YAML
+        MIRROR_COUNTRIES : var.mirror_countries,
+      })), # This is a JSON string containing YAML
+      maxmind_account_id  = var.maxmind_account_id,
+      maxmind_licence_key = var.maxmind_licence_key
     })
     content_type = "text/cloud-config"
     filename     = "user_data.yaml"

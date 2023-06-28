@@ -13,6 +13,7 @@ apt:
     };
 
 packages:
+  - geoipupdate
   - git
   - python3-venv
   - unattended-upgrades
@@ -21,6 +22,11 @@ package_upgrade: true
 runcmd:
   - echo unattended-upgrades unattended-upgrades/enable_auto_updates boolean true | debconf-set-selections
   - DEBIAN_FRONTEND=noninteractive dpkg-reconfigure unattended-upgrades
+  - mkdir /usr/share/GeoIP
+  - echo "AccountID ${maxmind_account_id}" > /etc/GeoIP.conf
+  - echo "LicenseKey ${maxmind_licence_key}" >> /etc/GeoIP.conf
+  - echo "EditionIDs GeoIP2-Country GeoIP2-City" >> /etc/GeoIP.conf
+  - geoipupdate -d /usr/share/GeoIP
   - chown ubuntu:ubuntu /home/ubuntu /home/ubuntu/start.sh /home/ubuntu/config.yaml
   - sleep 5 && sudo -u ubuntu /bin/bash /home/ubuntu/start.sh
 

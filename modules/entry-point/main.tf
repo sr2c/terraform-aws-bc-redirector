@@ -20,6 +20,7 @@ data "aws_route53_zone" "this" {
 
 resource "aws_route53_record" "this" {
   provider = aws.acm
+
   for_each = {
     for dvo in aws_acm_certificate.this.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
@@ -44,7 +45,7 @@ resource "aws_acm_certificate_validation" "this" {
 
 module "cdn" {
   source = "cloudposse/cloudfront-cdn/aws"
-  version     = "0.25.0"
+  version     = "0.26.0"
   context = module.this.context
   aliases = [var.domain_name]
   origin_domain_name = var.ec2_public_dns
@@ -54,7 +55,8 @@ module "cdn" {
   origin_protocol_policy = "http-only"
   origin_http_port = 5000
   forward_query_string = true
-  min_ttl = 10
-  default_ttl = 60
-  max_ttl = 120
+  min_ttl = 0
+  default_ttl = 0
+  max_ttl = 0
+  response_headers_policy_id = "eaab4381-ed33-4a86-88ca-d9558dc6cd63"  # CORS with Preflight + Security Headers
 }

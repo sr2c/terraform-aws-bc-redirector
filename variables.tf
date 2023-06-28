@@ -8,6 +8,16 @@ variable "entry_points" {
   type        = list(string)
 }
 
+variable "maxmind_account_id" {
+  description = "MaxMind account ID of an account with at least a GeoIP2 Country subscription."
+  type        = string
+}
+
+variable "maxmind_licence_key" {
+  description = "MaxMind licence key of an account with at least a GeoIP2 Country subscription."
+  type        = string
+}
+
 variable "public_key" {
   description = "API key of the public pool from the Bypass Censorship portal."
   type        = string
@@ -26,20 +36,7 @@ variable "update_key" {
   type        = string
 }
 
-variable "utm_campaign" {
-  description = "Name of the campaign to report for redirected traffic."
-  default     = "proxy"
-  type        = string
-}
-
-variable "utm_medium" {
-  description = "Name of the medium to report for redirected traffic."
-  default     = "redirector"
-  type        = string
-}
-
-variable "utm_source" {
-  description = "Name of the source to report for redirected traffic."
-  default     = "redirector"
-  type        = string
+variable "mirror_countries" {
+  description = "List of ISO 3166-2 country codes for countries where a mirror is required."
+  type        = list(string)
 }

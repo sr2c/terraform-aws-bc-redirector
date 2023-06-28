@@ -41,8 +41,8 @@ usage: |-
   }
   ```
 include:
-- "docs/targets.md"
 - "docs/terraform.md"
+- "docs/targets.md"
 contributors:
 - name: irl
   gitlab: irlxyz

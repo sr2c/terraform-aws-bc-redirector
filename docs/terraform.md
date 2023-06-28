@@ -4,7 +4,7 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.48.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.48.0, < 5.0.0 |
 | <a name="requirement_cloudinit"></a> [cloudinit](#requirement\_cloudinit) | >= 2.2.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.4.3 |
 
@@ -57,6 +57,9 @@
 | <a name="input_label_order"></a> [label\_order](#input\_label\_order) | The order in which the labels (ID elements) appear in the `id`.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 6 labels ("tenant" is the 6th), but at least one must be present. | `list(string)` | `null` | no |
 | <a name="input_label_value_case"></a> [label\_value\_case](#input\_label\_value\_case) | Controls the letter case of ID elements (labels) as included in `id`,<br>set as tag values, and output by this module individually.<br>Does not affect values of tags passed in via the `tags` input.<br>Possible values: `lower`, `title`, `upper` and `none` (no transformation).<br>Set this to `title` and set `delimiter` to `""` to yield Pascal Case IDs.<br>Default value: `lower`. | `string` | `null` | no |
 | <a name="input_labels_as_tags"></a> [labels\_as\_tags](#input\_labels\_as\_tags) | Set of labels (ID elements) to include as tags in the `tags` output.<br>Default is to include all labels.<br>Tags with empty values will not be included in the `tags` output.<br>Set to `[]` to suppress all generated tags.<br>**Notes:**<br>  The value of the `name` tag, if included, will be the `id`, not the `name`.<br>  Unlike other `null-label` inputs, the initial setting of `labels_as_tags` cannot be<br>  changed in later chained modules. Attempts to change it will be silently ignored. | `set(string)` | <pre>[<br>  "default"<br>]</pre> | no |
+| <a name="input_maxmind_account_id"></a> [maxmind\_account\_id](#input\_maxmind\_account\_id) | MaxMind account ID of an account with at least a GeoIP2 Country subscription. | `string` | n/a | yes |
+| <a name="input_maxmind_licence_key"></a> [maxmind\_licence\_key](#input\_maxmind\_licence\_key) | MaxMind licence key of an account with at least a GeoIP2 Country subscription. | `string` | n/a | yes |
+| <a name="input_mirror_countries"></a> [mirror\_countries](#input\_mirror\_countries) | List of ISO 3166-2 country codes for countries where a mirror is required. | `list(string)` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | ID element. Usually the component or solution name, e.g. 'app' or 'jenkins'.<br>This is the only ID element not also included as a `tag`.<br>The "name" tag is set to the full `id` string. There is no tag with the value of the `name` input. | `string` | `null` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | ID element. Usually an abbreviation of your organization name, e.g. 'eg' or 'cp', to help ensure generated IDs are globally unique | `string` | `null` | no |
 | <a name="input_public_key"></a> [public\_key](#input\_public\_key) | API key of the public pool from the Bypass Censorship portal. | `string` | n/a | yes |
@@ -66,9 +69,6 @@
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `{'BusinessUnit': 'XYZ'}`).<br>Neither the tag keys nor the tag values will be modified by this module. | `map(string)` | `{}` | no |
 | <a name="input_tenant"></a> [tenant](#input\_tenant) | ID element \_(Rarely used, not included by default)\_. A customer identifier, indicating who this instance of a resource is for | `string` | `null` | no |
 | <a name="input_update_key"></a> [update\_key](#input\_update\_key) | Update key that will be used by the Bypass Censorship portal to authenticate updates. | `string` | n/a | yes |
-| <a name="input_utm_campaign"></a> [utm\_campaign](#input\_utm\_campaign) | Name of the campaign to report for redirected traffic. | `string` | `"proxy"` | no |
-| <a name="input_utm_medium"></a> [utm\_medium](#input\_utm\_medium) | Name of the medium to report for redirected traffic. | `string` | `"redirector"` | no |
-| <a name="input_utm_source"></a> [utm\_source](#input\_utm\_source) | Name of the source to report for redirected traffic. | `string` | `"redirector"` | no |
 
 ## Outputs
 
